@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Herd Location Map</title>
+  <meta charset="utf-8">
+  <style>
+    #map { height: 90vh; width: 100%; }
+    body { margin:0; font-family: Arial; }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+  <h2 style="text-align:center">Detected Herd Location</h2>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    var lat = {{ herd_location.lat }};
+    var lon = {{ herd_location.lon }};
+    var count = {{ herd_location.count }};
+
+    var map = L.map('map').setView([lat, lon], 14);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19
+    }).addTo(map);
+
+    L.marker([lat, lon]).addTo(map)
+      .bindPopup("Herd detected here. Animals: " + count)
+      .openPopup();
+  </script>
+</body>
+</html>
